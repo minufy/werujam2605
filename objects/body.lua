@@ -27,6 +27,7 @@ end
 
 function Body:die()
     self.remove = true
+    Game:add(Particle, self.x+self.w/2, self.y+self.h/2, math.random(-2, 2), math.random(-2, 2), math.random(2, 3), Color.player)
 end
 
 function Body:push()
