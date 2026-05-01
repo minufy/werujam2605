@@ -5,12 +5,12 @@
 복제
 
 ## 해석
-- 
+체력 복제 아이템
 
 # setup
 `git submodule update --init`
 
 # credits
-- [Galmuri9](https://quiple.dev/galmuri)
+- [Galmuri7](https://quiple.dev/font/galmuri)
 - [lume](https://github.com/rxi/lume)
 - [classic](https://github.com/rxi/classic)
