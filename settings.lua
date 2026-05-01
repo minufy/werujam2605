@@ -6,7 +6,7 @@ Input.down = NewInput({"down", "s"})
 
 Camera.x_damp = 0.2
 Camera.y_damp = 0.2
-Camera.shake_damp = 0.2
+Camera.shake_damp = 0.6
 
 TILE_TYPES = {
     "tile",
@@ -23,7 +23,7 @@ IMG_TYPES = {
 
 TILE_SIZE = 8
 GRID_SIZE = TILE_SIZE
-MOVE_DAMP = 0.5
+MOVE_DAMP = 0.3
 FILTERS = {
     box = {"box"},
     player = {"player", "body"},

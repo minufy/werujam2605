@@ -4,7 +4,14 @@ local Body = require("objects.body")
 SetType(Body, "body")
 
 NewImage("player")
+
 local gap = 3
+local move_time = 6
+local health_time = 55
+
+local function clamp(x)
+    return math.min(math.max(1, x), Res.w/TILE_SIZE-2)
+end
 
 function Player:new(data)
     self.x = data.x
@@ -16,6 +23,11 @@ function Player:new(data)
     self.w = TILE_SIZE
     self.h = TILE_SIZE
 
+    self.current_x = 1
+    self.current_y = 0
+    self.next_x = 0
+    self.next_y = 0
+
     self.dx = TILE_SIZE
     self.dy = 0
 
@@ -25,10 +37,15 @@ function Player:new(data)
     end
     self.bodies = {}
     table.insert(self.bodies, Game:add(Body, self.x-TILE_SIZE, self.y, gap))
+
+    self.move_timer = Timer(move_time)
+    self.health_timer = Timer(health_time)
+
+    self.input_queue = {}
+
     self.cbs = {
         col = function (other)
-            self.x = self.old_x
-            self.y = self.old_y
+            self:die()
         end,
         push = function (other)
             other:push(self.x-self.old_x, self.y-self.old_y)
@@ -36,9 +53,12 @@ function Player:new(data)
         fruit = function (other)
             other.remove = true
             self:grow()
+            self:new_fruit()
         end,
         body = function (other)
-            self:die()
+            for i = #self.bodies, other.i, -1 do
+                table.remove(self.bodies, i):die()
+            end
         end,
     }
 
@@ -49,57 +69,101 @@ function Player:new(data)
 end
 
 function Player:update(dt)
-    self.old_x = self.x
-    self.old_y = self.y
-    local dx = 0
-    local dy = 0
+    local ix = 0
+    local iy = 0
     if Input.left.pressed then
-        self.x = self.x-TILE_SIZE
+        ix = ix-1
     end
     if Input.right.pressed then
-        self.x = self.x+TILE_SIZE
+        ix = ix+1
     end
     if Input.up.pressed then
-        self.y = self.y-TILE_SIZE
+        iy = iy-1
     end
     if Input.down.pressed then
-        self.y = self.y+TILE_SIZE
+        iy = iy+1
     end
-    
-    Physics.col_tiles(self, self.cbs.col)
-    
-    dx = self.x-self.old_x
-    dy = self.y-self.old_y
-    if dx ~= 0 or dy ~= 0 then
-        if (dx == -self.dx and dx ~= 0) or (dy == -self.dy and dy ~= 0) then
-            self.x = self.x-dx
-            self.y = self.y-dy
-        else
-            self.dx = dx
-            self.dy = dy
-        end
-    end
-    
-    Physics.col(self, FILTERS.box, self.cbs.push)
-    Physics.col(self, FILTERS.body, self.cbs.body)
-    Physics.col(self, FILTERS.fruit, self.cbs.fruit)
-
-    if self.old_x ~= self.x or self.old_y ~= self.y then
-        table.insert(self.trails, {x = self.old_x, y = self.old_y})
-        local old_x = self.old_x
-        local old_y = self.old_y
-        for i = 1, #self.bodies do
-            local temp_x = self.bodies[i].x
-            local temp_y = self.bodies[i].y
-            self.bodies[i].x = old_x
-            self.bodies[i].y = old_y
-            old_x = temp_x
-            old_y = temp_y
+    if #self.input_queue < 4 then
+        if ix ~= 0 then
+            table.insert(self.input_queue, {x = ix, y = 0})
+        elseif iy ~= 0 then
+            table.insert(self.input_queue, {x = 0, y = iy})
         end
     end
     
     self.smooth_x = self.smooth_x+(self.x-self.smooth_x)*MOVE_DAMP*dt
     self.smooth_y = self.smooth_y+(self.y-self.smooth_y)*MOVE_DAMP*dt
+    
+    Game.health_timer = self.health_timer.timer
+    Game.health_time = self.health_timer.time
+    if self.health_timer:run(dt) then
+        if #self.bodies > 0 then
+            table.remove(self.bodies, #self.bodies):die()
+        else
+            self:die()
+        end
+    end
+    if self.move_timer:run(dt) then
+        if #self.input_queue > 0 then
+            local input = table.remove(self.input_queue, 1)
+            if input.x ~= 0 and input.x ~= -self.current_x then
+                self.current_x = input.x
+                self.current_y = 0
+            elseif input.y ~= 0 and input.y ~= -self.current_y then
+                self.current_x = 0
+                self.current_y = input.y
+            end
+        end
+        self.old_x = self.x
+        self.old_y = self.y
+
+        self.x = self.x+self.current_x*TILE_SIZE
+        self.y = self.y+self.current_y*TILE_SIZE
+
+        -- local dx = 0
+        -- local dy = 0
+        Physics.col_tiles(self, self.cbs.col)
+        
+        -- dx = self.x-self.old_x
+        -- dy = self.y-self.old_y
+        -- if dx ~= 0 or dy ~= 0 then
+        --     if (dx == -self.dx and dx ~= 0) or (dy == -self.dy and dy ~= 0) then
+        --         self.x = self.x-dx
+        --         self.y = self.y-dy
+        --     else
+        --         self.dx = dx
+        --         self.dy = dy
+        --     end
+        -- end
+        
+        Physics.col(self, FILTERS.box, self.cbs.push)
+        Physics.col(self, FILTERS.body, self.cbs.body)
+        Physics.col(self, FILTERS.fruit, self.cbs.fruit)
+    
+        if self.old_x ~= self.x or self.old_y ~= self.y then
+            table.insert(self.trails, {x = self.old_x, y = self.old_y})
+            local old_x = self.old_x
+            local old_y = self.old_y
+            for i = 1, #self.bodies do
+                local temp_x = self.bodies[i].x
+                local temp_y = self.bodies[i].y
+                self.bodies[i].x = old_x
+                self.bodies[i].y = old_y
+                old_x = temp_x
+                old_y = temp_y
+            end
+        end
+    end
+end
+
+function Player:new_fruit()
+    local d = math.round(math.sqrt(health_time/move_time*#self.bodies))
+    local tx = math.round(self.x/TILE_SIZE)
+    local ty = math.round(self.y/TILE_SIZE)
+    local x = math.random(clamp(tx-d), clamp(tx+d))*TILE_SIZE
+    local y = math.random(clamp(ty-d), clamp(ty+d))*TILE_SIZE
+    Game:add(OBJECT_TABLE.fruit, {x = x, y = y})
+    Camera:shake(1)
 end
 
 function Player:draw_trail()
@@ -125,8 +189,7 @@ function Player:draw()
 end
 
 function Player:push()
-    self.x = self.old_x
-    self.y = self.old_y
+    self:die()
 end
 
 function Player:grow()
@@ -135,14 +198,14 @@ function Player:grow()
             return
         end
         local trail = self.trails[i]
-        table.insert(self.bodies, Game:add(Body, trail.x, trail.y, gap, self))
+        table.insert(self.bodies, Game:add(Body, trail.x, trail.y, gap, self, #self.bodies))
     end
 end
 
 function Player:die()
     self.remove = true
     Game:add(Particle, self.old_x+self.w/2, self.old_y+self.h/2, math.random(-5, 5), math.random(-5, 5), math.random(6, 8), Color.player)
-    Camera:shake(1)
+    Camera:shake(2)
     for i, body in ipairs(self.bodies) do
         body:die()
     end

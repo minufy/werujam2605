@@ -2,7 +2,7 @@ local Body = Object:extend()
 
 local gap_damp = 0.4
 
-function Body:new(x, y, gap, player)
+function Body:new(x, y, gap, player, i)
     self.x = x
     self.y = y
     self.smooth_x = self.x
@@ -11,6 +11,7 @@ function Body:new(x, y, gap, player)
     self.h = TILE_SIZE
     self.gap = gap
     self.player = player
+    self.i = i
 end
 
 function Body:update(dt)

@@ -18,6 +18,8 @@ end
 function Game:reset()
     self.objects = {}
     self.group_names = {}
+    self.health_time = 0
+    self.health_timer = 1
     self.input_on = true
 end
 
@@ -79,18 +81,6 @@ function Game:draw()
                     object:draw()
                 end
             end
-            -- local i = #self.objects[group_name]
-            -- while i > 0 do
-            --     local object = self.objects[group_name][i]
-            --     if object.update then
-            --         object:update(dt)
-            --     end
-            --     if object.remove then
-            --         self.objects[group_name][i] = self.objects[group_name][#self.objects[group_name]]
-            --         self.objects[group_name][#self.objects[group_name]] = nil
-            --     end
-            --     i = i-1
-            -- end
         end
     end
     
@@ -98,6 +88,10 @@ function Game:draw()
         Edit:draw()
     end
     
+    love.graphics.setColor(Color.player)
+    love.graphics.rectangle("fill", 0, 0, (1-self.health_timer/self.health_time)*Res.w, 4)
+    Color.reset()
+
     Camera:stop()
 
     if Edit.editing then
