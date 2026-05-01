@@ -14,9 +14,7 @@ TILE_TYPES = {
 OBJECT_TYPES = {
     "player",
     "box",
-    "input_area",
-    "output_area",
-    "button",
+    "fruit",
     "zone",
 }
 IMG_TYPES = {
@@ -27,9 +25,10 @@ TILE_SIZE = 8
 GRID_SIZE = TILE_SIZE
 MOVE_DAMP = 0.5
 FILTERS = {
-    area = {"input_area", "output_area"},
     box = {"box"},
-    player = {"player"},
+    player = {"player", "body"},
+    fruit = {"fruit"},
+    body = {"body"},
 }
 
 local object_align = {

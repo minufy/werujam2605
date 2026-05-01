@@ -32,8 +32,7 @@ function love.load()
 
     -- NewAudio("jump")
     Color.bg = rgb(14, 14, 14)
-    Color.input_area = rgb(60, 246, 231)
-    Color.output_area = rgb(230, 36, 175)
+    Color.player = rgb(230, 36, 175)
     
     Shader:init("assets/shader/shadow.glsl")
     Res:init()

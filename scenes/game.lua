@@ -21,26 +21,33 @@ function Game:reset()
     self.input_on = true
 end
 
+local update_order = {
+    "player",
+    "body",
+    "box",
+    "fruit",
+    "particle",
+    "square_particle",
+}
+
 function Game:update(dt)
     Edit:update(dt)
 
     if not Edit.editing then
-        self.group_names = {}
-        for group_name, _ in pairs(self.objects) do
-            table.insert(self.group_names, group_name)
-        end
-        for _, group_name in ipairs(self.group_names) do
-            local i = #self.objects[group_name]
-            while i > 0 do
-                local object = self.objects[group_name][i]
-                if object.update then
-                    object:update(dt)
+        for _, group_name in ipairs(update_order) do
+            if self.objects[group_name] then
+                local i = #self.objects[group_name]
+                while i > 0 do
+                    local object = self.objects[group_name][i]
+                    if object.update then
+                        object:update(dt)
+                    end
+                    if object.remove then
+                        self.objects[group_name][i] = self.objects[group_name][#self.objects[group_name]]
+                        self.objects[group_name][#self.objects[group_name]] = nil
+                    end
+                    i = i-1
                 end
-                if object.remove then
-                    self.objects[group_name][i] = self.objects[group_name][#self.objects[group_name]]
-                    self.objects[group_name][#self.objects[group_name]] = nil
-                end
-                i = i-1
             end
         end
     end

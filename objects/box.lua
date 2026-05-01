@@ -18,6 +18,8 @@ function Box:new(data)
             self.y = self.old_y
         end,
         player = function (other)
+            self.x = self.old_x
+            self.y = self.old_y
             other:push()
         end,
     }
