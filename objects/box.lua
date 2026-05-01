@@ -2,8 +2,6 @@ local Box = Object:extend()
 
 NewImage("box")
 
-local move_damp = 0.5
-
 function Box:new(data)
     self.x = data.x
     self.y = data.y
@@ -26,8 +24,8 @@ function Box:new(data)
 end
 
 function Box:update(dt)
-    self.smooth_x = self.smooth_x+(self.x-self.smooth_x)*move_damp*dt
-    self.smooth_y = self.smooth_y+(self.y-self.smooth_y)*move_damp*dt
+    self.smooth_x = self.smooth_x+(self.x-self.smooth_x)*MOVE_DAMP*dt
+    self.smooth_y = self.smooth_y+(self.y-self.smooth_y)*MOVE_DAMP*dt
 end
 
 function Box:draw()

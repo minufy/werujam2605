@@ -16,6 +16,7 @@ OBJECT_TYPES = {
     "box",
     "input_area",
     "output_area",
+    "button",
     "zone",
 }
 IMG_TYPES = {
@@ -23,7 +24,7 @@ IMG_TYPES = {
 }
 
 TILE_SIZE = 8
-GRID_SIZE = 8
+GRID_SIZE = TILE_SIZE
 MOVE_DAMP = 0.5
 FILTERS = {
     area = {"input_area", "output_area"},

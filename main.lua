@@ -1,5 +1,6 @@
 Object = require("modules.classic")
 Particle = require("objects.particle")
+SquareParticle = require("objects.square_particle")
 
 -- stuff 
 require("stuff.audio")
@@ -21,6 +22,7 @@ require("scenes.sm")
 require("settings")
 
 SetType(Particle, "particle")
+SetType(SquareParticle, "square_particle")
 
 function love.load()
     LogFont = love.graphics.newFont(20)
