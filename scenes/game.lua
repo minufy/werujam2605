@@ -53,6 +53,17 @@ function Game:update(dt)
     end
 end
 
+local draw_order = {
+    "player",
+    "body",
+    "box",
+    "fruit",
+    "particle",
+    "square_particle",
+    "tiles",
+    "zone",
+}
+
 function Game:draw()
     love.graphics.setColor(Color.bg)
     love.graphics.rectangle("fill", 0, 0, Res.w, Res.h)
@@ -60,12 +71,26 @@ function Game:draw()
     
     Camera:start()
     -- Shader:start()
-    
-    for group_name, group in pairs(self.objects) do
-        for _, object in ipairs(group) do
-            if object.draw then
-                object:draw()
+
+    for _, group_name in ipairs(draw_order) do
+        if self.objects[group_name] then
+            for i, object in ipairs(self.objects[group_name]) do
+                if object.draw then
+                    object:draw()
+                end
             end
+            -- local i = #self.objects[group_name]
+            -- while i > 0 do
+            --     local object = self.objects[group_name][i]
+            --     if object.update then
+            --         object:update(dt)
+            --     end
+            --     if object.remove then
+            --         self.objects[group_name][i] = self.objects[group_name][#self.objects[group_name]]
+            --         self.objects[group_name][#self.objects[group_name]] = nil
+            --     end
+            --     i = i-1
+            -- end
         end
     end
     

@@ -67,14 +67,11 @@ function Player:update(dt)
     end
     
     Physics.col_tiles(self, self.cbs.col)
-    Physics.col(self, FILTERS.box, self.cbs.push)
-    Physics.col(self, FILTERS.body, self.cbs.body)
-    Physics.col(self, FILTERS.fruit, self.cbs.fruit)
-
+    
     dx = self.x-self.old_x
     dy = self.y-self.old_y
     if dx ~= 0 or dy ~= 0 then
-        if dx == -self.dx and dy == -self.dy then
+        if (dx == -self.dx and dx ~= 0) or (dy == -self.dy and dy ~= 0) then
             self.x = self.x-dx
             self.y = self.y-dy
         else
@@ -82,6 +79,10 @@ function Player:update(dt)
             self.dy = dy
         end
     end
+    
+    Physics.col(self, FILTERS.box, self.cbs.push)
+    Physics.col(self, FILTERS.body, self.cbs.body)
+    Physics.col(self, FILTERS.fruit, self.cbs.fruit)
 
     if self.old_x ~= self.x or self.old_y ~= self.y then
         table.insert(self.trails, {x = self.old_x, y = self.old_y})
