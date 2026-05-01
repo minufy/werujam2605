@@ -21,6 +21,8 @@ function Game:reset()
     self.health_time = 0
     self.health_timer = 1
     self.input_on = true
+    self.dead = false
+    self.text_bounce = TILE_SIZE
 end
 
 local update_order = {
@@ -51,6 +53,13 @@ function Game:update(dt)
                     i = i-1
                 end
             end
+        end
+    end
+    
+    if self.dead then
+        self.text_bounce = self.text_bounce-self.text_bounce*0.2*dt
+        if Input.restart.pressed then
+            Level:reload()
         end
     end
 end
@@ -91,6 +100,13 @@ function Game:draw()
     love.graphics.setColor(Color.player)
     love.graphics.rectangle("fill", 0, 0, (1-self.health_timer/self.health_time)*Res.w, 4)
     Color.reset()
+    
+    if self.dead then
+        love.graphics.setColor(Color.white)
+        love.graphics.setFont(Font)
+        love.graphics.print("press [r] to restart", 10, 10-self.text_bounce)
+        Color.reset()
+    end
 
     Camera:stop()
 

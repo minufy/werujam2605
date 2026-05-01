@@ -188,6 +188,7 @@ end
 
 function Player:die()
     self.remove = true
+    Game.dead = true
     Game:add(Particle, self.old_x+self.w/2, self.old_y+self.h/2, math.random(-5, 5), math.random(-5, 5), math.random(6, 8), Color.player)
     Camera:shake(2)
     for i, body in ipairs(self.bodies) do
