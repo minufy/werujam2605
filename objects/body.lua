@@ -31,8 +31,12 @@ function Body:die()
     Game:add(Particle, self.x+self.w/2, self.y+self.h/2, math.random(-5, 5), math.random(-5, 5), math.random(6, 8), Color.player)
 end
 
-function Body:push()
-    self.player:push()
+function Body:cut()
+    self.player:cut(self)
 end
+
+-- function Body:push()
+--     self.player:push()
+-- end
 
 return Body

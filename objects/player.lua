@@ -47,18 +47,13 @@ function Player:new(data)
         col = function (other)
             self:die()
         end,
-        push = function (other)
-            other:push(self.x-self.old_x, self.y-self.old_y)
-        end,
         fruit = function (other)
             other.remove = true
             self:grow()
             self:new_fruit()
         end,
         body = function (other)
-            for i = #self.bodies, other.i, -1 do
-                table.remove(self.bodies, i):die()
-            end
+            self:cut(other)
         end,
     }
 
@@ -119,24 +114,8 @@ function Player:update(dt)
 
         self.x = self.x+self.current_x*TILE_SIZE
         self.y = self.y+self.current_y*TILE_SIZE
-
-        -- local dx = 0
-        -- local dy = 0
-        Physics.col_tiles(self, self.cbs.col)
         
-        -- dx = self.x-self.old_x
-        -- dy = self.y-self.old_y
-        -- if dx ~= 0 or dy ~= 0 then
-        --     if (dx == -self.dx and dx ~= 0) or (dy == -self.dy and dy ~= 0) then
-        --         self.x = self.x-dx
-        --         self.y = self.y-dy
-        --     else
-        --         self.dx = dx
-        --         self.dy = dy
-        --     end
-        -- end
-        
-        Physics.col(self, FILTERS.box, self.cbs.push)
+        Physics.col_tiles(self, self.cbs.col)        
         Physics.col(self, FILTERS.body, self.cbs.body)
         Physics.col(self, FILTERS.fruit, self.cbs.fruit)
     
@@ -164,6 +143,11 @@ function Player:new_fruit()
     local y = math.random(clamp(ty-d), clamp(ty+d))*TILE_SIZE
     Game:add(OBJECT_TABLE.fruit, {x = x, y = y})
     Camera:shake(1)
+    if math.random(1, 100) <= 45 then
+        local wx = math.random(1, Res.w/TILE_SIZE-2)*TILE_SIZE
+        local wy = math.random(1, Res.w/TILE_SIZE-2)*TILE_SIZE
+        Game:add(OBJECT_TABLE.warning, {x = wx, y = wy})
+    end
 end
 
 function Player:draw_trail()
@@ -188,9 +172,9 @@ function Player:draw()
     love.graphics.draw(Image.player, self.smooth_x, self.smooth_y)
 end
 
-function Player:push()
-    self:die()
-end
+-- function Player:push()
+--     self:die()
+-- end
 
 function Player:grow()
     for i = #self.trails-#self.bodies, #self.trails-#self.bodies*2, -1 do
@@ -208,6 +192,12 @@ function Player:die()
     Camera:shake(2)
     for i, body in ipairs(self.bodies) do
         body:die()
+    end
+end
+
+function Player:cut(other)
+    for i = #self.bodies, other.i, -1 do
+        table.remove(self.bodies, i):die()
     end
 end
 

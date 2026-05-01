@@ -1,6 +1,6 @@
 Object = require("modules.classic")
 Particle = require("objects.particle")
-SquareParticle = require("objects.square_particle")
+CircleParticle = require("objects.circle_particle")
 
 -- stuff 
 require("stuff.audio")
@@ -22,7 +22,7 @@ require("scenes.sm")
 require("settings")
 
 SetType(Particle, "particle")
-SetType(SquareParticle, "square_particle")
+SetType(CircleParticle, "circle_particle")
 
 function love.load()
     LogFont = love.graphics.newFont(20)
@@ -33,6 +33,8 @@ function love.load()
     -- NewAudio("jump")
     Color.bg = rgb(14, 14, 14)
     Color.player = rgb(230, 36, 175)
+    Color.fruit = rgb(83, 51, 189)
+    Color.white = rgb(239, 250, 250)
     
     Shader:init("assets/shader/shadow.glsl")
     Res:init()

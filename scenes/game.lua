@@ -26,10 +26,10 @@ end
 local update_order = {
     "player",
     "body",
-    "box",
     "fruit",
+    "warning",
     "particle",
-    "square_particle",
+    "circle_particle",
 }
 
 function Game:update(dt)
@@ -58,12 +58,12 @@ end
 local draw_order = {
     "player",
     "body",
-    "box",
     "fruit",
     "particle",
-    "square_particle",
+    "circle_particle",
     "tiles",
     "zone",
+    "warning",
 }
 
 function Game:draw()

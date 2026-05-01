@@ -13,8 +13,8 @@ TILE_TYPES = {
 }
 OBJECT_TYPES = {
     "player",
-    "box",
     "fruit",
+    "warning",
     "zone",
 }
 IMG_TYPES = {
@@ -25,8 +25,7 @@ TILE_SIZE = 8
 GRID_SIZE = TILE_SIZE
 MOVE_DAMP = 0.3
 FILTERS = {
-    box = {"box"},
-    player = {"player", "body"},
+    player = {"player"},
     fruit = {"fruit"},
     body = {"body"},
 }

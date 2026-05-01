@@ -10,7 +10,7 @@ function Fruit:new(data)
     
     if not Edit.editing then
         for _ = 1, 3 do
-            Game:add(Particle, self.x+self.w/2, self.y+self.h/2, math.random(-5, 5), math.random(-5, 5), math.random(6, 8), Color.player)
+            Game:add(Particle, self.x+self.w/2, self.y+self.h/2, math.random(-5, 5), math.random(-5, 5), math.random(6, 8), Color.fruit)
         end
     end
 end

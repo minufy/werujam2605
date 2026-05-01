@@ -1,6 +1,6 @@
-local SquareParticle = Object:extend()
+local CircleParticle = Object:extend()
 
-function SquareParticle:new(x, y, size, target_size, color)
+function CircleParticle:new(x, y, size, target_size, color)
     self.x = x
     self.y = y
     self.w = size
@@ -11,19 +11,20 @@ function SquareParticle:new(x, y, size, target_size, color)
     self.color = color or {1, 1, 1}
 end
 
-function SquareParticle:update(dt)
+function CircleParticle:update(dt)
     self.alpha = self.alpha-self.alpha*0.1*dt
     if self.alpha < 0.1 then
         self.remove = true
     end
 end
 
-function SquareParticle:draw()
+function CircleParticle:draw()
     love.graphics.setLineWidth(self.alpha*4)
     love.graphics.setColor(Color.alpha(self.color, self.alpha))
     local size = self.size-self.alpha*self.target_size+self.target_size
-    love.graphics.rectangle("line", self.x-size/2, self.y-size/2, size, size, 2, 2)
+    -- love.graphics.rectangle("line", self.x-size/2, self.y-size/2, size, size, 2, 2)
+    love.graphics.circle("line", self.x, self.y, size)
     Color.reset()
 end
 
-return SquareParticle
+return CircleParticle
