@@ -26,10 +26,13 @@ function love.load()
     LogFont = love.graphics.newFont(20)
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setLineStyle("rough")
-    Font = love.graphics.newFont("assets/fonts/Galmuri9.ttf", 10)
+    Font = love.graphics.newFont("assets/fonts/Galmuri7.ttf", 8)
 
     -- NewAudio("jump")
-
+    Color.bg = rgb(14, 14, 14)
+    Color.input_area = rgb(60, 246, 231)
+    Color.output_area = rgb(230, 36, 175)
+    
     Shader:init("assets/shader/shadow.glsl")
     Res:init()
     SM:load("game")

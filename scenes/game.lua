@@ -18,6 +18,7 @@ end
 function Game:reset()
     self.objects = {}
     self.group_names = {}
+    self.input_on = true
 end
 
 function Game:update(dt)
@@ -46,7 +47,7 @@ function Game:update(dt)
 end
 
 function Game:draw()
-    love.graphics.setColor(rgb(49, 77, 121))
+    love.graphics.setColor(Color.bg)
     love.graphics.rectangle("fill", 0, 0, Res.w, Res.h)
     Color.reset()
     

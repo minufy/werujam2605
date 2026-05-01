@@ -1,7 +1,7 @@
 Input.right = NewInput({"right", "d"})
 Input.left = NewInput({"left", "a"})
--- Input.up = NewInput({"up", "w"})
--- Input.down = NewInput({"down", "s"})
+Input.up = NewInput({"up", "w"})
+Input.down = NewInput({"down", "s"})
 -- Input.jump = NewInput({"space", "up", "w", "lshift"})
 
 Camera.x_damp = 0.2
@@ -13,16 +13,26 @@ TILE_TYPES = {
 }
 OBJECT_TYPES = {
     "player",
+    "box",
+    "input_area",
+    "output_area",
     "zone",
 }
 IMG_TYPES = {
-    "test",
+    -- "test",
 }
 
-TILE_SIZE = 16
+TILE_SIZE = 8
+GRID_SIZE = 8
+MOVE_DAMP = 0.5
+FILTERS = {
+    area = {"input_area", "output_area"},
+    box = {"box"},
+    player = {"player"},
+}
 
 local object_align = {
-    player = Bottom,
+    -- player = Bottom,
 }
 OBJECT_ALIGN = setmetatable(object_align, {
     __index = function (t, k)
