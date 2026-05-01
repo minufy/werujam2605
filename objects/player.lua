@@ -65,6 +65,12 @@ function Player:update(dt)
     if Input.down.pressed then
         self.y = self.y+TILE_SIZE
     end
+    
+    Physics.col_tiles(self, self.cbs.col)
+    Physics.col(self, FILTERS.box, self.cbs.push)
+    Physics.col(self, FILTERS.body, self.cbs.body)
+    Physics.col(self, FILTERS.fruit, self.cbs.fruit)
+
     dx = self.x-self.old_x
     dy = self.y-self.old_y
     if dx ~= 0 or dy ~= 0 then
@@ -76,11 +82,6 @@ function Player:update(dt)
             self.dy = dy
         end
     end
-    
-    Physics.col_tiles(self, self.cbs.col)
-    Physics.col(self, FILTERS.box, self.cbs.push)
-    Physics.col(self, FILTERS.body, self.cbs.body)
-    Physics.col(self, FILTERS.fruit, self.cbs.fruit)
 
     if self.old_x ~= self.x or self.old_y ~= self.y then
         table.insert(self.trails, {x = self.old_x, y = self.old_y})
@@ -98,7 +99,6 @@ function Player:update(dt)
     
     self.smooth_x = self.smooth_x+(self.x-self.smooth_x)*MOVE_DAMP*dt
     self.smooth_y = self.smooth_y+(self.y-self.smooth_y)*MOVE_DAMP*dt
-
 end
 
 function Player:draw_trail()
