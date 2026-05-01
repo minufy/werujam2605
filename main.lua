@@ -26,7 +26,7 @@ function love.load()
     LogFont = love.graphics.newFont(20)
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setLineStyle("rough")
-    Font = love.graphics.newFont("assets/fonts/Galmuri9.ttf", 10)
+    Font = love.graphics.newFont("assets/fonts/Galmuri7.ttf", 8)
 
     -- NewAudio("jump")
 

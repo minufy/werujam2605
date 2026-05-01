@@ -19,7 +19,8 @@ IMG_TYPES = {
     "test",
 }
 
-TILE_SIZE = 16
+TILE_SIZE = 8
+GRID_SIZE = TILE_SIZE
 
 local object_align = {
     player = Bottom,
