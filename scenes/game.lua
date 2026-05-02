@@ -50,6 +50,18 @@ function Game:update(dt)
             end
         end
 
+        self.shuffle_timer = self.shuffle_timer+dt
+        if self.shuffle_timer > shuffle_time and not self.shuffle then
+            self.shuffle = true
+            Camera:shake(3)
+        end
+
+        if self.shuffle and Input.space.pressed then
+            if self:check() then
+                self:next_level()
+            end
+        end
+    else
         if Input.next_level.pressed or Input.prev_level.pressed then
             local d_index = -1
             if Input.next_level.pressed then
@@ -60,18 +72,6 @@ function Game:update(dt)
             Mouse:deselect_all()
             if not Level:load_level(tostring) then
                 self.level_index = prev_level_index
-            end
-        end
-
-        self.shuffle_timer = self.shuffle_timer+dt
-        if self.shuffle_timer > shuffle_time and not self.shuffle then
-            self.shuffle = true
-            Camera:shake(3)
-        end
-
-        if self.shuffle and Input.space.pressed then
-            if self:check() then
-                self:next_level()
             end
         end
     end
