@@ -27,14 +27,23 @@ function Game:init()
     Level:init(tostring(self.level_index))
 end
 
-function Game:reset()
+function Game:before_reload()
     self.shuffle = false
     self.touched = false
     self.objects = {}
     self.group_names = {}
     self.shape_types = lume.shuffle(lume.clone(SHAPE_TYPES))
     self.shuffle_timer = 0
-    self.cursor = self:add(OBJECT_TABLE.cursor)
+    self:add(OBJECT_TABLE.cursor)
+    self:add(OBJECT_TABLE.remove, {x = Res.w-TILE_SIZE, y = Res.h-TILE_SIZE})
+end
+
+function Game:after_reload()
+    if self.objects["shape"] then
+        self.shape_count = #self.objects["shape"]
+    else
+        self.shape_count = 0
+    end
 end
 
 function Game:update(dt)
@@ -116,6 +125,12 @@ function Game:next_level()
 end
 
 function Game:check()
+    if self.objects["shape"] and #self.objects["shape"] < self.shape_count then
+        return false
+    end
+    if self.objects["fake_shape"] and #self.objects["fake_shape"] > 0 then
+        return false
+    end
     for _, shape in ipairs(self.objects["shape"]) do
         if not shape.ok then
             return false
@@ -142,9 +157,11 @@ end
 
 local draw_order = {
     "particle",
+    "fake_shape",
     "shape",
-    "cursor",
+    "remove",
     "tile",
+    "cursor",
 }
 
 function Game:draw()
@@ -154,20 +171,6 @@ function Game:draw()
     self:draw_bg()
 
     Shader:start()
-    
-    for i, group_name in ipairs(draw_order) do
-        if self.objects[group_name] ~= nil then
-            for _, object in ipairs(self.objects[group_name]) do
-                if object.draw then
-                    object:draw()
-                end
-            end
-        end
-    end
-    
-    if Edit.editing then
-        Edit:draw()
-    end
     
     love.graphics.setColor(Color.fg)
     love.graphics.rectangle("fill", 0, 0, (1-self.shuffle_timer/shuffle_time)*Res.w, 4)
@@ -192,6 +195,20 @@ function Game:draw()
 
     for i = 1, self.health do
         love.graphics.draw(Image.heart, i*10, 20)
+    end
+
+    for i, group_name in ipairs(draw_order) do
+        if self.objects[group_name] ~= nil then
+            for _, object in ipairs(self.objects[group_name]) do
+                if object.draw then
+                    object:draw()
+                end
+            end
+        end
+    end
+    
+    if Edit.editing then
+        Edit:draw()
     end
     
     Camera:stop()

@@ -1,1 +1,1 @@
-return {}
+return {["tiles"]={},["objects"]={["0x0131c8dafaf0"]={["y"]=64,["type"]="fake_shape",["x"]=64},["0x0234c1110338"]={["y"]=48,["type"]="shape",["x"]=48}},["img_objects"]={}}

@@ -14,8 +14,10 @@ TILE_TYPES = {
     "tile",
 }
 OBJECT_TYPES = {
-    "cursor",
     "shape",
+    "fake_shape",
+    "cursor",
+    "remove",
 }
 IMG_TYPES = {
     -- "test",
@@ -31,6 +33,11 @@ SHAPE_TYPES = {
 TILE_SIZE = 16
 GRID_SIZE = TILE_SIZE
 Shader.offset = 1
+
+FILTERS = {
+    shape = {"shape", "fake_shape"},
+    remove = {"remove"}
+}
 
 local object_align = {
     -- player = Bottom,
