@@ -22,11 +22,11 @@ function Img:new(data)
     self.ok = false
 
     self.shuffled = false
-    self.can_place = true
+    self.other = true
 
     self.cbs = {
         place = function (other)
-            self.can_place = false
+            self.other = other
         end,
         shuffle = function (other)
             self:shuffle()
@@ -61,18 +61,17 @@ function Img:draw()
 end
 
 function Img:place(x, y)
-    self.can_place = true
+    self.other = nil
     self.x = math.round_s(self.x, TILE_SIZE)
     self.y = math.round_s(self.y, TILE_SIZE)
     Physics.col(self, filters.img, self.cbs.place)
-    if self.can_place then
-        Camera:shake(1)
-        for _ = 1, 4 do
-            Game:add(Particle, self.x+TILE_SIZE/2, self.y+TILE_SIZE/2, math.random(-10, 10), math.random(-10, 10), math.random(4, 10))
-        end
-    else
-        self.x = x
-        self.y = y
+    Camera:shake(1)
+    for _ = 1, 4 do
+        Game:add(Particle, self.x+TILE_SIZE/2, self.y+TILE_SIZE/2, math.random(-10, 10), math.random(-10, 10), math.random(4, 10))
+    end
+    if self.other then
+        self.other.x = x
+        self.other.y = y
     end
 end
 

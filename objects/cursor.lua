@@ -39,7 +39,7 @@ function Cursor:update(dt)
         end
         if Input.mb[1].released then
             if self.grabbed then
-                self.grabbed:place(self.original_x, self.original_y, self.cbs.place)
+                self.grabbed:place(self.original_x, self.original_y)
                 self.grabbed = nil
             end
         end
