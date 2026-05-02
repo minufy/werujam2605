@@ -1,1 +1,1 @@
-return {["tiles"]={["7,17"]="tile",["4,17"]="tile",["8,17"]="tile",["10,17"]="tile",["9,17"]="tile",["5,17"]="tile",["6,17"]="tile"},["objects"]={["0x01de0be71748"]={["x"]=48,["y"]=112,["type"]="player"}},["img_objects"]={}}
+return {["img_objects"]={["0x0241d5cd9e38"]={["type"]="circle",["y"]=48,["x"]=64},["0x0241d7ed7250"]={["type"]="corner",["y"]=48,["x"]=48}},["tiles"]={},["objects"]={}}

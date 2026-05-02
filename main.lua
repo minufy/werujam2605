@@ -26,6 +26,7 @@ function love.load()
     LogFont = love.graphics.newFont(20)
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setLineStyle("rough")
+    love.mouse.setVisible(false)
     Font = love.graphics.newFont("assets/fonts/Galmuri7.ttf", 8)
 
     -- NewAudio("jump")
@@ -34,6 +35,8 @@ function love.load()
     Res:init()
     SM:load("game")
     UpdateTargetFPS()
+
+    math.randomseed(love.timer.getTime())
 end
 
 function love.update(dt)

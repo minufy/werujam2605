@@ -5,7 +5,7 @@
 복제
 
 ## 해석
-체력 복제 아이템
+똑같은 모양 만들기 퍼즐
 
 # setup
 `git submodule update --init`
