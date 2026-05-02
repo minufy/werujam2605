@@ -63,7 +63,7 @@ function SM:draw()
         Color.reset()
     end
     love.graphics.setFont(Font)
-    love.graphics.setColor(1, 1, 1, self.global_volume_alpha)
+    love.graphics.setColor(Color.alpha(Color.fg, self.global_volume_alpha))
     local s = "volume: "..Audio.global_volume
     love.graphics.print(s, Res.w-10-Font:getWidth(s), 10+Font:getHeight())
     Color.reset()
