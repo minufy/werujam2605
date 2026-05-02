@@ -13,6 +13,7 @@ function Game:add(Object, ...)
 end
 
 function Game:init()
+    self.level_index = 1
     Edit:init()
     Level:init("1")
 end
@@ -22,7 +23,6 @@ function Game:reset()
     self.objects = {}
     self.group_names = {}
     self.shuffle_timer = 0
-    self.level_index = 1
     self.cursor = self:add(OBJECT_TABLE.cursor)
 end
 
@@ -63,14 +63,17 @@ function Game:update(dt)
         end
     else
         if Input.next_level.pressed or Input.prev_level.pressed then
-            local d_index = -1
+            local d_index
+            if Input.prev_level.pressed then
+                d_index = -1
+            end
             if Input.next_level.pressed then
                 d_index = 1
             end
             local prev_level_index = self.level_index
             self.level_index = self.level_index+d_index
             Mouse:deselect_all()
-            if not Level:load_level(tostring) then
+            if not Level:load_level(tostring(self.level_index)) then
                 self.level_index = prev_level_index
             end
         end
@@ -137,8 +140,6 @@ function Game:draw()
         Edit:draw()
     end
     
-    Camera:stop()
-
     love.graphics.rectangle("fill", 0, 0, (1-self.shuffle_timer/shuffle_time)*Res.w, 4)
     if not self.shuffle then
         love.graphics.setFont(Font)
@@ -150,6 +151,8 @@ function Game:draw()
         love.graphics.print("press [space] to confirm", 10, Res.h-Font:getHeight()-10)
         Color.reset()
     end
+    
+    Camera:stop()
 
     if Edit.editing then
         Edit:draw_hud()

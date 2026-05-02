@@ -1,1 +1,1 @@
-return {}
+return {["img_objects"]={},["tiles"]={},["objects"]={}}
