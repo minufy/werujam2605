@@ -23,7 +23,7 @@ IMG_TYPES = {
 
 TILE_SIZE = 8
 GRID_SIZE = TILE_SIZE
-MOVE_DAMP = 0.3
+MOVE_DAMP = 0.4
 FILTERS = {
     player = {"player"},
     fruit = {"fruit"},

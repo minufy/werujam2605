@@ -11,7 +11,7 @@ function Warning:new(data)
     self.h = TILE_SIZE
     self.r = 0
 
-    self.explosion_timer = Timer(90)
+    self.explosion_timer = Timer(100)
     self.cbs = {
         player = function (other)
             other:die()
@@ -39,7 +39,7 @@ function Warning:update(dt)
         end
         Game:add(CircleParticle, self.x+self.w/2, self.y+self.h/2, TILE_SIZE, r, Color.white)
     end
-    self.r = self.r+(r-self.r)*0.05*dt
+    self.r = self.r+(r-self.r)*0.04*dt
 end
 
 function Warning:draw()

@@ -22,7 +22,7 @@ end
 
 function Body:draw()
     love.graphics.setColor(Color.player)
-    love.graphics.rectangle("fill", self.smooth_x+self.gap, self.smooth_y+self.gap, TILE_SIZE-self.gap*2, TILE_SIZE-self.gap*2)
+    love.graphics.rectangle("fill", self.smooth_x+self.gap, self.smooth_y+self.gap, TILE_SIZE-self.gap*2, TILE_SIZE-self.gap*2, 2, 2)
     Color.reset()
 end
 

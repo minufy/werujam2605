@@ -6,7 +6,7 @@ SetType(Body, "body")
 NewImage("player")
 
 local gap = 3
-local move_time = 6
+local move_time = 8
 local health_time = 55
 
 local function clamp(x)
