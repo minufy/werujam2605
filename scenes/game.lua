@@ -22,6 +22,7 @@ function Game:reset()
     self.objects = {}
     self.group_names = {}
     self.shuffle_timer = 0
+    self.level_index = 1
     self.cursor = self:add(OBJECT_TABLE.cursor)
 end
 
@@ -48,7 +49,20 @@ function Game:update(dt)
                 i = i-1
             end
         end
-        
+
+        if Input.next_level.pressed or Input.prev_level.pressed then
+            local d_index = -1
+            if Input.next_level.pressed then
+                d_index = 1
+            end
+            local prev_level_index = self.level_index
+            self.level_index = self.level_index+d_index
+            Mouse:deselect_all()
+            if not Level:load_level(tostring) then
+                self.level_index = prev_level_index
+            end
+        end
+
         self.shuffle_timer = self.shuffle_timer+dt
         if self.shuffle_timer > shuffle_time and not self.shuffle then
             self.shuffle = true
@@ -57,10 +71,19 @@ function Game:update(dt)
 
         if self.shuffle and Input.space.pressed then
             if self:check() then
-                Log("WOW!")
+                self:next_level()
             end
         end
     end
+end
+
+function Game:next_level()
+    SM:set_fade(function ()
+        self.level_index = self.level_index+1
+        if not Level:load_level(tostring(self.level_index)) then
+            self.level_index = self.level_index-1
+        end
+    end)
 end
 
 function Game:check()
@@ -97,7 +120,7 @@ function Game:draw()
     
     Camera:start()
     self:draw_bg()
-    
+
     Shader:start()
     
     for i, group_name in ipairs(draw_order) do

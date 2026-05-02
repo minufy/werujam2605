@@ -29,7 +29,8 @@ function love.load()
     love.mouse.setVisible(false)
     Font = love.graphics.newFont("assets/fonts/Galmuri7.ttf", 8)
 
-    -- NewAudio("jump")
+    NewAudio("fade")
+    NewAudio("volume")
 
     Shader:init("assets/shader/shadow.glsl")
     Res:init()
