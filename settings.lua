@@ -8,7 +8,7 @@ Input.space = NewInput({"space"})
 
 Camera.x_damp = 0.2
 Camera.y_damp = 0.2
-Camera.shake_damp = 0.6
+Camera.shake_damp = 0.8
 
 TILE_TYPES = {
     "tile",
