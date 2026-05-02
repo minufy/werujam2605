@@ -198,6 +198,9 @@ end
 
 function Player:cut(other)
     for i = #self.bodies, other.i, -1 do
+        if i < 1 then
+            break
+        end
         table.remove(self.bodies, i):die()
     end
 end
