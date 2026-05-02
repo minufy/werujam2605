@@ -36,7 +36,7 @@ function Player:new(data)
         table.insert(self.trails, {x = self.x-x, y = self.y})
     end
     self.bodies = {}
-    table.insert(self.bodies, Game:add(Body, self.x-TILE_SIZE, self.y, gap))
+    table.insert(self.bodies, Game:add(Body, self.x-TILE_SIZE, self.y, gap, self, #self.bodies))
 
     self.move_timer = Timer(move_time)
     self.health_timer = Timer(health_time)
