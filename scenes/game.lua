@@ -1,6 +1,9 @@
 Game = {}
 
-local shuffle_time = 120
+NewImage("heart")
+NewImage("bg")
+
+local shuffle_time = 180
 
 function Game:add(Object, ...)
     local o = Object(...)
@@ -14,12 +17,14 @@ end
 
 function Game:init()
     self.level_index = 1
+    self.health = 3
     Edit:init()
-    Level:init("1")
+    Level:init(tostring(self.level_index))
 end
 
 function Game:reset()
     self.shuffle = false
+    self.touched = false
     self.objects = {}
     self.group_names = {}
     self.shuffle_timer = 0
@@ -56,9 +61,11 @@ function Game:update(dt)
             Camera:shake(3)
         end
 
-        if self.shuffle and Input.space.pressed then
+        if self.shuffle and Input.space.pressed and self.touched then
             if self:check() then
                 self:next_level()
+            else
+                self:damage()
             end
         end
     else
@@ -78,6 +85,19 @@ function Game:update(dt)
             end
         end
     end
+end
+
+function Game:damage()
+    for _ = 1, 4 do
+        Game:add(Particle, 10*self.health+4, 20+4, math.random(-10, 10), math.random(-10, 10), math.random(4, 10), Color.heart)
+    end
+    self.health = self.health-1
+    if self.health == 0 then
+        SM:set_fade(function ()
+            SM:load("game_over")
+        end)
+    end
+    Camera:shake(2)
 end
 
 function Game:next_level()
@@ -117,11 +137,9 @@ local draw_order = {
 }
 
 function Game:draw()
-    love.graphics.setColor(rgb(141, 163, 199))
-    love.graphics.rectangle("fill", 0, 0, Res.w, Res.h)
-    Color.reset()
-    
     Camera:start()
+    
+    love.graphics.draw(Image.bg)
     self:draw_bg()
 
     Shader:start()
@@ -140,16 +158,24 @@ function Game:draw()
         Edit:draw()
     end
     
+    love.graphics.setColor(Color.fg)
     love.graphics.rectangle("fill", 0, 0, (1-self.shuffle_timer/shuffle_time)*Res.w, 4)
+    Color.reset()
     if not self.shuffle then
+        love.graphics.setColor(Color.fg)
         love.graphics.setFont(Font)
         love.graphics.print("remember...", 10, 10)
+        Color.reset()
     else
         love.graphics.setFont(Font)
         love.graphics.print("replicate!", 10, 10)
-        love.graphics.setColor(1, 1, 1, 0.5)
+        love.graphics.setColor(Color.alpha(Color.fg, 0.5))
         love.graphics.print("press [space] to confirm", 10, Res.h-Font:getHeight()-10)
         Color.reset()
+    end
+
+    for i = 1, self.health do
+        love.graphics.draw(Image.heart, i*10, 20)
     end
     
     Camera:stop()

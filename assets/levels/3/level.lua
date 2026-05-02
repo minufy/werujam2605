@@ -1,0 +1,1 @@
+return {["tiles"]={},["objects"]={},["img_objects"]={["0x0233f5097728"]={["x"]=64,["y"]=64,["dir"]=2,["type"]="reverse_diamond"},["0x0233f4010970"]={["x"]=48,["y"]=48,["type"]="diamond"}}}

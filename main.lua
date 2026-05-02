@@ -32,6 +32,11 @@ function love.load()
     NewAudio("fade")
     NewAudio("volume")
 
+    Color.bbgg = rgb(45, 43, 51)
+    Color.bg = rgb(124, 74, 90)
+    Color.heart = rgb(190, 109, 105)
+    Color.fg = rgb(238, 240, 224)
+
     Shader:init("assets/shader/shadow.glsl")
     Res:init()
     SM:load("game")

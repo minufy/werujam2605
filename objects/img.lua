@@ -35,9 +35,12 @@ function Img:new(data)
 end
 
 function Img:shuffle()
-    self.x = math.random(0, Res.w/TILE_SIZE-1)*TILE_SIZE
-    self.y = math.random(0, Res.w/TILE_SIZE-1)*TILE_SIZE
+    self.x = math.random(2, Res.w/TILE_SIZE-3)*TILE_SIZE
+    self.y = math.random(2, Res.w/TILE_SIZE-3)*TILE_SIZE
     Physics.col(self, filters.img, self.cbs.shuffle)
+    if self.target_x == self.x and self.target_y == self.y then
+        self:shuffle()
+    end
 end
 
 function Img:update(dt)

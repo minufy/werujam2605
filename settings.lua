@@ -8,7 +8,7 @@ Input.space = NewInput({"space"})
 
 Camera.x_damp = 0.2
 Camera.y_damp = 0.2
-Camera.shake_damp = 0.4
+Camera.shake_damp = 0.6
 
 TILE_TYPES = {
     "tile",
@@ -18,9 +18,11 @@ OBJECT_TYPES = {
     -- "zone",
 }
 IMG_TYPES = {
+    "reverse_diamond",
     "diamond",
-    "corner",
+    "triangle",
     "circle",
+    "square",
 }
 
 TILE_SIZE = 16

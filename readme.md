@@ -14,3 +14,4 @@
 - [Galmuri7](https://quiple.dev/font/galmuri)
 - [lume](https://github.com/rxi/lume)
 - [classic](https://github.com/rxi/classic)
+- [palette](https://lospec.com/palette-list/skylyte5)

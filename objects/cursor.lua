@@ -20,6 +20,7 @@ function Cursor:new()
             self.grabbed = other
             self.original_x = self.grabbed.x
             self.original_y = self.grabbed.y
+            Game.touched = true
         end,
     }
 end
@@ -52,7 +53,7 @@ end
 
 function Cursor:draw()
     if self.grabbed then
-        love.graphics.setColor(1, 1, 1, 0.2)
+        love.graphics.setColor(Color.alpha(Color.fg, 0.2))
         love.graphics.rectangle("fill", math.round_s(self.grabbed.x, TILE_SIZE), math.round_s(self.grabbed.y, TILE_SIZE), TILE_SIZE, TILE_SIZE)
         Color.reset()
     end
