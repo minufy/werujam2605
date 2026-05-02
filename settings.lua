@@ -15,9 +15,12 @@ TILE_TYPES = {
 }
 OBJECT_TYPES = {
     "cursor",
-    -- "zone",
+    "shape",
 }
 IMG_TYPES = {
+    -- "test",
+}
+SHAPE_TYPES = {
     "reverse_diamond",
     "diamond",
     "triangle",

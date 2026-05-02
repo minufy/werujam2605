@@ -1,1 +1,1 @@
-return {["img_objects"]={["0x0236fbbfdaa8"]={["x"]=80,["y"]=32,["type"]="diamond"},["0x0236fbbe2b68"]={["x"]=64,["y"]=64,["type"]="circle"},["0x0236f64f21f0"]={["x"]=48,["y"]=48,["type"]="triangle"}},["tiles"]={},["objects"]={}}
+return {}

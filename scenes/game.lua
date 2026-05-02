@@ -1,3 +1,5 @@
+local lume = require("modules.lume")
+
 Game = {}
 
 NewImage("heart")
@@ -16,6 +18,9 @@ function Game:add(Object, ...)
 end
 
 function Game:init()
+    for i, type in ipairs(SHAPE_TYPES) do
+        NewImage(type)
+    end
     self.level_index = 1
     self.health = 3
     Edit:init()
@@ -27,6 +32,7 @@ function Game:reset()
     self.touched = false
     self.objects = {}
     self.group_names = {}
+    self.shape_types = lume.shuffle(lume.clone(SHAPE_TYPES))
     self.shuffle_timer = 0
     self.cursor = self:add(OBJECT_TABLE.cursor)
 end
@@ -110,12 +116,16 @@ function Game:next_level()
 end
 
 function Game:check()
-    for _, img in ipairs(self.objects["img"]) do
-        if not img.ok then
+    for _, shape in ipairs(self.objects["shape"]) do
+        if not shape.ok then
             return false
         end
     end
     return true
+end
+
+function Game:get_type()
+    return table.remove(self.shape_types)
 end
 
 function Game:draw_bg()
@@ -132,8 +142,9 @@ end
 
 local draw_order = {
     "particle",
-    "img",
+    "shape",
     "cursor",
+    "tile",
 }
 
 function Game:draw()

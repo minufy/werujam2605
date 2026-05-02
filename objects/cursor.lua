@@ -3,7 +3,7 @@ local Cursor = Object:extend()
 NewImage("cursor")
 
 local filters = {
-    img = {"img"}
+    shape = {"shape"}
 }
 
 function Cursor:new()
@@ -35,7 +35,7 @@ function Cursor:update(dt)
     
     if Game.shuffle then
         if Input.mb[1].pressed then
-            Physics.col(self, filters.img, self.cbs.grab)
+            Physics.col(self, filters.shape, self.cbs.grab)
         end
         if Input.mb[1].released then
             if self.grabbed then
