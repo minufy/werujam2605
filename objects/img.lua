@@ -4,6 +4,8 @@ local filters = {
     img = {"img"}
 }
 
+local move_damp = 0.3
+
 function Img:new(data)
     self.type = data.type
     self.x = data.x
@@ -44,8 +46,8 @@ function Img:shuffle()
 end
 
 function Img:update(dt)
-    self.smooth_x = self.smooth_x+(self.x-self.smooth_x)*0.2*dt
-    self.smooth_y = self.smooth_y+(self.y-self.smooth_y)*0.2*dt
+    self.smooth_x = self.smooth_x+(self.x-self.smooth_x)*move_damp*dt
+    self.smooth_y = self.smooth_y+(self.y-self.smooth_y)*move_damp*dt
     if Game.shuffle and not self.shuffled then
         for _ = 1, 3 do
             Game:add(Particle, self.x+TILE_SIZE/2, self.y+TILE_SIZE/2, math.random(-10, 10), math.random(-10, 10), math.random(4, 10))

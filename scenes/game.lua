@@ -161,6 +161,11 @@ function Game:draw()
     love.graphics.setColor(Color.fg)
     love.graphics.rectangle("fill", 0, 0, (1-self.shuffle_timer/shuffle_time)*Res.w, 4)
     Color.reset()
+    love.graphics.setColor(Color.fg)
+    love.graphics.setFont(Font)
+    local s
+    s = "level "..self.level_index
+    love.graphics.print(s, Res.w-10-Font:getWidth(s), 10)
     if not self.shuffle then
         love.graphics.setColor(Color.fg)
         love.graphics.setFont(Font)
