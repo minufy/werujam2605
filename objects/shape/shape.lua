@@ -46,9 +46,14 @@ function Shape:shape_update(dt)
 end
 
 function Shape:place(x, y)
-    self.other = nil
     self.x = math.round_s(self.x, TILE_SIZE)
     self.y = math.round_s(self.y, TILE_SIZE)
+    if self.x < 0 or self.x+self.w > Res.w or self.y < 0 or self.y+self.h > Res.h then
+        self.x = x
+        self.y = y
+        return
+    end
+    self.other = nil
     Physics.col(self, FILTERS.shape, self.cbs.place)
     Camera:shake(1)
     for _ = 1, 4 do
