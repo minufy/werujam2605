@@ -5,7 +5,12 @@ Game = {}
 NewImage("heart")
 NewImage("bg")
 
-local shuffle_time = 180
+local shuffle_time = 60*4
+local musics = {
+    love.audio.newSource("assets/audio/music/1.ogg", "stream"),
+    love.audio.newSource("assets/audio/music/2.ogg", "stream"),
+    love.audio.newSource("assets/audio/music/3.ogg", "stream"),
+}
 
 function Game:add(Object, ...)
     local o = Object(...)
@@ -36,6 +41,9 @@ function Game:before_reload()
     self.shuffle_timer = 0
     self:add(OBJECT_TABLE.cursor)
     self:add(OBJECT_TABLE.remove, {x = Res.w-TILE_SIZE, y = Res.h-TILE_SIZE})
+    Music.source = musics[math.random(1, #musics)]
+    Music.source:stop()
+    Music.source:play()
 end
 
 function Game:after_reload()
@@ -78,8 +86,10 @@ function Game:update(dt)
 
         if self.shuffle and Input.space.pressed and self.touched then
             if self:check() then
+                Audio.ok:play()
                 self:next_level()
             else
+                Audio.bad:play()
                 self:damage()
             end
         end

@@ -50,7 +50,7 @@ end
 function Cursor:draw()
     if self.grabbed then
         love.graphics.setColor(Color.alpha(Color.fg, 0.2))
-        love.graphics.rectangle("fill", math.round_s(self.grabbed.x, TILE_SIZE), math.round_s(self.grabbed.y, TILE_SIZE), TILE_SIZE, TILE_SIZE)
+        love.graphics.rectangle("fill", math.round_s(self.grabbed.x, TILE_SIZE), math.round_s(self.grabbed.y, TILE_SIZE), TILE_SIZE, TILE_SIZE, 3)
         Color.reset()
     end
     love.graphics.draw(Image.cursor, self.x, self.y)

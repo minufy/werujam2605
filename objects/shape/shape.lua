@@ -62,12 +62,16 @@ function Shape:place(x, y)
     if self.other then
         self.other.x = x
         self.other.y = y
+        Audio.swap:play(0.7, math.random(8, 12)/10)
+    else
+        Audio.place:play(0.7, math.random(8, 12)/10)
     end
     Physics.col(self, FILTERS.remove, self.cbs.remove)
 end
 
 function Shape:die()
     self.remove = true
+    Audio.remove:play(0.7, math.random(8, 12)/10)
     for _ = 1, 4 do
         Game:add(Particle, self.x+TILE_SIZE/2, self.y+TILE_SIZE/2, math.random(-10, 10), math.random(-10, 10), math.random(4, 10))
     end

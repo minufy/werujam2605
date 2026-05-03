@@ -30,7 +30,12 @@ function love.load()
     Font = love.graphics.newFont("assets/fonts/Galmuri7.ttf", 8)
 
     NewAudio("fade")
+    NewAudio("bad")
+    NewAudio("ok")
     NewAudio("volume")
+    NewAudio("place")
+    NewAudio("swap")
+    NewAudio("remove")
 
     Color.bbgg = rgb(45, 43, 51)
     Color.bg = rgb(124, 74, 90)
