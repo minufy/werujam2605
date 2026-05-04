@@ -1,1 +1,1 @@
-return {}
+return {["img_objects"]={},["tiles"]={},["objects"]={["0x01ea6ea20688"]={["y"]=80,["dir"]=1,["type"]="mirror",["x"]=64},["0x01ea7380d668"]={["y"]=64,["x"]=32,["type"]="beam"},["0x01ea737deb50"]={["y"]=32,["type"]="beam",["dir"]=1,["x"]=64}}}

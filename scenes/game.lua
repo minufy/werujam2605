@@ -169,10 +169,17 @@ function Game:draw()
     self:draw_bg()
 
     Shader:start()
-    
-    love.graphics.setColor(Color.fg)
-    love.graphics.rectangle("fill", 0, 0, (1-self.shuffle_timer/shuffle_time)*Res.w, 4)
-    Color.reset()
+
+    for i, group_name in ipairs(draw_order) do
+        if self.objects[group_name] ~= nil then
+            for _, object in ipairs(self.objects[group_name]) do
+                if object.draw then
+                    object:draw()
+                end
+            end
+        end
+    end
+        
     love.graphics.setColor(Color.fg)
     love.graphics.setFont(Font)
     local s
@@ -190,20 +197,12 @@ function Game:draw()
         love.graphics.print("press [space] to confirm", 10, Res.h-Font:getHeight()-10)
         Color.reset()
     end
-
     for i = 1, self.health do
         love.graphics.draw(Image.heart, i*10, 20)
     end
-
-    for i, group_name in ipairs(draw_order) do
-        if self.objects[group_name] ~= nil then
-            for _, object in ipairs(self.objects[group_name]) do
-                if object.draw then
-                    object:draw()
-                end
-            end
-        end
-    end
+    love.graphics.setColor(Color.fg)
+    love.graphics.rectangle("fill", 0, 0, (1-self.shuffle_timer/shuffle_time)*Res.w, 4)
+    Color.reset()
     
     if Edit.editing then
         Edit:draw()

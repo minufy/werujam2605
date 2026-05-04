@@ -1,1 +1,1 @@
-return {}
+return {["tiles"]={},["objects"]={["0x01ef10059788"]={["type"]="beam",["x"]=80,["y"]=64,["dir"]=2},["0x01ef12b83da8"]={["type"]="mirror",["x"]=32,["y"]=80,["dir"]=3},["0x01ef12bda118"]={["type"]="mirror",["x"]=80,["y"]=48},["0x01ef1006bb40"]={["type"]="mirror",["x"]=32,["y"]=64,["dir"]=2},["0x01ef12bb8ce0"]={["type"]="beam",["x"]=32,["y"]=48}},["img_objects"]={}}

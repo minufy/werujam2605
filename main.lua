@@ -35,7 +35,6 @@ function love.load()
     NewAudio("volume")
     NewAudio("place")
     NewAudio("swap")
-    NewAudio("remove")
 
     Color.bbgg = rgb(33, 35, 57)
     Color.bg = rgb(48, 58, 95)
