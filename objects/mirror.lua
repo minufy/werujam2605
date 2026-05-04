@@ -23,7 +23,9 @@ function Mirror:update(dt)
 end
 
 function Mirror:draw()
-    love.graphics.draw(Image.mirror, self.smooth_x+self.draw_x, self.smooth_y+self.draw_y, self.r)
+    if Game.shuffle then
+        love.graphics.draw(Image.mirror, self.smooth_x+self.draw_x, self.smooth_y+self.draw_y, self.r)
+    end
 end
 
 return Mirror

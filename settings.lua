@@ -17,7 +17,6 @@ OBJECT_TYPES = {
     "mirror",
     "beam",
     "cursor",
-    "remove",
 }
 IMG_TYPES = {
     -- "test",
@@ -29,7 +28,6 @@ Shader.offset = 1
 
 FILTERS = {
     shape = {"mirror", "beam"},
-    remove = {"remove"},
     mirror = {"mirror"},
 }
 

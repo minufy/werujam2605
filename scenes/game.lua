@@ -36,7 +36,6 @@ function Game:before_reload()
     self.group_names = {}
     self.shuffle_timer = 0
     self:add(OBJECT_TABLE.cursor)
-    self:add(OBJECT_TABLE.remove, {x = Res.w-TILE_SIZE, y = Res.h-TILE_SIZE})
     if not Edit.editing then
         Music.source = musics[math.random(1, #musics)]
         Music.source:stop()
@@ -45,10 +44,9 @@ function Game:before_reload()
 end
 
 function Game:after_reload()
-    if self.objects["shape"] then
-        self.shape_count = #self.objects["shape"]
-    else
-        self.shape_count = 0
+    self.paths = {}
+    for i, beam in ipairs(self.objects["beam"]) do
+        self.paths[i] = beam:make_path()
     end
 end
 
@@ -133,14 +131,8 @@ function Game:next_level()
 end
 
 function Game:check()
-    if self.objects["shape"] and #self.objects["shape"] < self.shape_count then
-        return false
-    end
-    if self.objects["fake_shape"] and #self.objects["fake_shape"] > 0 then
-        return false
-    end
-    for _, shape in ipairs(self.objects["shape"]) do
-        if not shape.ok then
+    for i, beam in ipairs(self.objects["beam"]) do
+        if beam:make_path() ~= self.paths[i] then
             return false
         end
     end

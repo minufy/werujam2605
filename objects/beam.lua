@@ -95,4 +95,17 @@ function Beam:draw()
     love.graphics.draw(Image.beam, self.smooth_x+self.draw_x, self.smooth_y+self.draw_y, self.r)
 end
 
+function Beam:make_path()
+    local path = ""
+    self.laser.x = self.x
+    self.laser.y = self.y
+    self.laser.dir = self.dir
+    for i = 1, 64 do
+        self:move_laser()
+        Physics.col(self.laser, FILTERS.mirror, self.cbs.mirror)
+        path = path.."|"..self.laser.x..","..self.laser.y
+    end
+    return path
+end
+
 return Beam
