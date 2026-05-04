@@ -28,4 +28,8 @@ function Mirror:draw()
     end
 end
 
+function Mirror:place()
+    Audio.mirror:play(0.7, math.random(8, 12)/10)
+end
+
 return Mirror

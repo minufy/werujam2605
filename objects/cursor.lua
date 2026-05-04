@@ -18,6 +18,7 @@ function Cursor:new()
             self.original_x = self.grabbed.x
             self.original_y = self.grabbed.y
             Game.touched = true
+            Audio.grab:play(0.7, math.random(8, 12)/10)
         end,
     }
 end
@@ -36,7 +37,7 @@ function Cursor:update(dt)
         end
         if Input.mb[1].released then
             if self.grabbed then
-                self.grabbed:place(self.original_x, self.original_y)
+                self.grabbed:shape_place(self.original_x, self.original_y)
                 self.grabbed.held = false
                 self.grabbed = nil
             end

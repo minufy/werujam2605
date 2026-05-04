@@ -8,6 +8,21 @@ NewImage("laser_front")
 NewImage("laser_left")
 NewImage("laser_right")
 
+local function move(dir)
+    local x = 0
+    local y = 0
+    if dir == 0 then
+        x = 1
+    elseif dir == 1 then
+        y = 1
+    elseif dir == 2 then
+        x = -1
+    elseif dir == 3 then
+        y = -1
+    end
+    return x, y
+end
+
 function Beam:new(data)
     self.x = data.x
     self.y = data.y
@@ -20,6 +35,8 @@ function Beam:new(data)
     self.dir = data.dir or 0
     self.r = self.dir*math.pi/2
     self:shape_init()
+
+    self.particle_timer = Timer(3)
 
     self.laser = {}
     self.laser.dir = self.dir
@@ -47,20 +64,22 @@ function Beam:new(data)
     }
 end
 
+function Beam:place()
+    Audio.beam:play(0.7, math.random(8, 12)/10)
+end
+
 function Beam:update(dt)
     self:shape_update(dt)
+    if self.particle_timer:run(dt) then
+        local x, y = move(self.dir)
+        Game:add(Particle, self.x+self.w/2+x*TILE_SIZE*0.4, self.y+self.h/2+y*TILE_SIZE*0.4, math.random(-8, 8), math.random(-8, 8), math.random(1, 2), Color.heart)
+    end
 end
 
 function Beam:move_laser()
-    if self.laser.dir == 0 then
-        self.laser.x = self.laser.x+TILE_SIZE
-    elseif self.laser.dir == 1 then
-        self.laser.y = self.laser.y+TILE_SIZE
-    elseif self.laser.dir == 2 then
-        self.laser.x = self.laser.x-TILE_SIZE
-    elseif self.laser.dir == 3 then
-        self.laser.y = self.laser.y-TILE_SIZE
-    end
+    local x, y = move(self.laser.dir)
+    self.laser.x = self.laser.x+TILE_SIZE*x
+    self.laser.y = self.laser.y+TILE_SIZE*y
 end
 
 function Beam:dir_laser(d)

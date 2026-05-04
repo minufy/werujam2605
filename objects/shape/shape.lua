@@ -43,7 +43,7 @@ function Shape:shape_update(dt)
     self.ok = self.target_x == self.x and self.target_y == self.y
 end
 
-function Shape:place(x, y)
+function Shape:shape_place(x, y)
     self.x = math.round_s(self.x, TILE_SIZE)
     self.y = math.round_s(self.y, TILE_SIZE)
     if self.x < 0 or self.x+self.w > Res.w or self.y < 0 or self.y+self.h > Res.h then
@@ -64,6 +64,7 @@ function Shape:place(x, y)
     else
         Audio.place:play(0.7, math.random(8, 12)/10)
     end
+    self:place()
 end
 
 return Shape
