@@ -75,7 +75,7 @@ function Game:update(dt)
                 i = i-1
             end
         end
-
+        
         self.shuffle_timer = self.shuffle_timer+dt
         if self.shuffle_timer > shuffle_time and not self.shuffle then
             self.shuffle = true
