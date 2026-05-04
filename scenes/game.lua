@@ -41,9 +41,11 @@ function Game:before_reload()
     self.shuffle_timer = 0
     self:add(OBJECT_TABLE.cursor)
     self:add(OBJECT_TABLE.remove, {x = Res.w-TILE_SIZE, y = Res.h-TILE_SIZE})
-    Music.source = musics[math.random(1, #musics)]
-    Music.source:stop()
-    Music.source:play()
+    if not Edit.editing then
+        Music.source = musics[math.random(1, #musics)]
+        Music.source:stop()
+        Music.source:play()
+    end
 end
 
 function Game:after_reload()
