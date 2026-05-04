@@ -45,8 +45,10 @@ end
 
 function Game:after_reload()
     self.paths = {}
-    for i, beam in ipairs(self.objects["beam"]) do
-        self.paths[i] = beam:make_path()
+    if self.objects["beam"] then
+        for i, beam in ipairs(self.objects["beam"]) do
+            self.paths[i] = beam:make_path()
+        end
     end
 end
 

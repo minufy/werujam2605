@@ -23,7 +23,7 @@ function Mirror:update(dt)
 end
 
 function Mirror:draw()
-    if Game.shuffle then
+    if Game.shuffle or Edit.editing then
         love.graphics.draw(Image.mirror, self.smooth_x+self.draw_x, self.smooth_y+self.draw_y, self.r)
     end
 end
