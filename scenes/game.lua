@@ -170,7 +170,7 @@ end
 local draw_order = {
     "particle",
     "fake_shape",
-    "shape",
+    "mirror",
     "remove",
     "tile",
     "cursor",

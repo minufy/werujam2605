@@ -14,7 +14,7 @@ TILE_TYPES = {
     "tile",
 }
 OBJECT_TYPES = {
-    "shape",
+    "mirror",
     "fake_shape",
     "cursor",
     "remove",
@@ -40,7 +40,7 @@ FILTERS = {
 }
 
 local object_align = {
-    -- player = Bottom,
+    mirror = Center,
 }
 OBJECT_ALIGN = setmetatable(object_align, {
     __index = function (t, k)

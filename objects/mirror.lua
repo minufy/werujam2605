@@ -1,0 +1,28 @@
+local Mirror = Object:extend()
+
+Mirror:implement(require("objects.shape.shape"))
+
+function Mirror:new(data)
+    self.x = data.x
+    self.y = data.y
+    self.smooth_x = self.x
+    self.smooth_y = self.y
+    self.draw_x = 0
+    self.draw_y = 0
+    self.type = Game:get_type()
+    self.w = Image[self.type]:getWidth()
+    self.h = Image[self.type]:getHeight()
+    self.dir = data.dir or 0
+    self.r = self.dir*math.pi/2
+    self:shape_init()
+end
+
+function Mirror:update(dt)
+    self:shape_update(dt)
+end
+
+function Mirror:draw()
+    love.graphics.draw(Image[self.type], self.smooth_x+self.draw_x, self.smooth_y+self.draw_y, self.r)
+end
+
+return Mirror
