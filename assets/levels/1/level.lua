@@ -1,1 +1,1 @@
-return {["img_objects"]={},["tiles"]={},["objects"]={["0x01d4a2798b10"]={["x"]=48,["type"]="shape",["y"]=48}}}
+return {["tiles"]={["4,4"]="tile",["5,5"]="tile",["4,3"]="tile",["4,5"]="tile",["3,4"]="tile",["1,2"]="tile",["2,3"]="tile",["5,3"]="tile",["5,2"]="tile",["6,1"]="tile",["2,6"]="tile",["3,5"]="tile",["6,2"]="tile",["2,5"]="tile",["7,1"]="tile"},["objects"]={},["img_objects"]={}}

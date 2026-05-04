@@ -15,19 +15,12 @@ TILE_TYPES = {
 }
 OBJECT_TYPES = {
     "mirror",
-    "fake_shape",
+    "beam",
     "cursor",
     "remove",
 }
 IMG_TYPES = {
     -- "test",
-}
-SHAPE_TYPES = {
-    "reverse_diamond",
-    "diamond",
-    "triangle",
-    "circle",
-    "square",
 }
 
 TILE_SIZE = 16
@@ -35,12 +28,14 @@ GRID_SIZE = TILE_SIZE
 Shader.offset = 1
 
 FILTERS = {
-    shape = {"shape", "fake_shape"},
-    remove = {"remove"}
+    shape = {"mirror", "beam"},
+    remove = {"remove"},
+    mirror = {"mirror"},
 }
 
 local object_align = {
-    mirror = Center,
+    mirror = Bottom,
+    beam = Bottom,
 }
 OBJECT_ALIGN = setmetatable(object_align, {
     __index = function (t, k)

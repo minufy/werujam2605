@@ -23,9 +23,6 @@ function Game:add(Object, ...)
 end
 
 function Game:init()
-    for i, type in ipairs(SHAPE_TYPES) do
-        NewImage(type)
-    end
     self.level_index = 1
     self.health = 3
     Edit:init()
@@ -37,7 +34,6 @@ function Game:before_reload()
     self.touched = false
     self.objects = {}
     self.group_names = {}
-    self.shape_types = lume.shuffle(lume.clone(SHAPE_TYPES))
     self.shuffle_timer = 0
     self:add(OBJECT_TABLE.cursor)
     self:add(OBJECT_TABLE.remove, {x = Res.w-TILE_SIZE, y = Res.h-TILE_SIZE})
@@ -151,10 +147,6 @@ function Game:check()
     return true
 end
 
-function Game:get_type()
-    return table.remove(self.shape_types)
-end
-
 function Game:draw_bg()
     love.graphics.setColor(0, 0, 0, 0.05)
     for x = 0, Res.w/TILE_SIZE do
@@ -169,7 +161,7 @@ end
 
 local draw_order = {
     "particle",
-    "fake_shape",
+    "beam",
     "mirror",
     "remove",
     "tile",

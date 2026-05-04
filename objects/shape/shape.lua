@@ -9,8 +9,9 @@ function Shape:shape_init()
 
     self.shuffled = false
     self.other = true
+    self.held = false
 
-    self.cbs = {
+    self.shape_cbs = {
         place = function (other)
             self.other = other
         end,
@@ -26,7 +27,7 @@ end
 function Shape:shuffle()
     self.x = math.random(2, Res.w/TILE_SIZE-3)*TILE_SIZE
     self.y = math.random(2, Res.w/TILE_SIZE-3)*TILE_SIZE
-    Physics.col(self, FILTERS.shape, self.cbs.shuffle)
+    Physics.col(self, FILTERS.shape, self.shape_cbs.shuffle)
     if self.target_x == self.x and self.target_y == self.y then
         self:shuffle()
     end
@@ -54,7 +55,7 @@ function Shape:place(x, y)
         return
     end
     self.other = nil
-    Physics.col(self, FILTERS.shape, self.cbs.place)
+    Physics.col(self, FILTERS.shape, self.shape_cbs.place)
     Camera:shake(1)
     for _ = 1, 4 do
         Game:add(Particle, self.x+TILE_SIZE/2, self.y+TILE_SIZE/2, math.random(-10, 10), math.random(-10, 10), math.random(4, 10))
@@ -66,7 +67,7 @@ function Shape:place(x, y)
     else
         Audio.place:play(0.7, math.random(8, 12)/10)
     end
-    Physics.col(self, FILTERS.remove, self.cbs.remove)
+    Physics.col(self, FILTERS.remove, self.shape_cbs.remove)
 end
 
 function Shape:die()

@@ -1,1 +1,0 @@
-return {["objects"]={["0x0185802907c0"]={["y"]=48,["type"]="shape",["x"]=64},["0x0185f8229130"]={["y"]=64,["type"]="shape",["x"]=48},["0x01858024e8a0"]={["y"]=64,["type"]="fake_shape",["x"]=64},["0x0185f67a20b8"]={["y"]=48,["type"]="fake_shape",["x"]=48}},["img_objects"]={},["tiles"]={}}

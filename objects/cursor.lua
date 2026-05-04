@@ -14,6 +14,7 @@ function Cursor:new()
     self.cbs = {
         grab = function (other)
             self.grabbed = other
+            self.grabbed.held = true
             self.original_x = self.grabbed.x
             self.original_y = self.grabbed.y
             Game.touched = true
@@ -36,6 +37,7 @@ function Cursor:update(dt)
         if Input.mb[1].released then
             if self.grabbed then
                 self.grabbed:place(self.original_x, self.original_y)
+                self.grabbed.held = false
                 self.grabbed = nil
             end
         end
