@@ -24,7 +24,10 @@ IMG_TYPES = {
 
 TILE_SIZE = 16
 GRID_SIZE = TILE_SIZE
-Shader.offset = 1
+Shader.offset = {
+    x = 1,
+    y = 1
+}
 
 FILTERS = {
     shape = {"mirror", "beam"},

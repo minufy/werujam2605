@@ -1,5 +1,3 @@
-local lume = require("modules.lume")
-
 Game = {}
 
 NewImage("heart")
@@ -38,6 +36,7 @@ function Game:before_reload()
     self:add(OBJECT_TABLE.cursor)
     if not Edit.editing then
         Music.source = musics[math.random(1, #musics)]
+        Music:update()
         Music.source:stop()
         Music.source:play()
     end
