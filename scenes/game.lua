@@ -123,12 +123,18 @@ function Game:damage()
 end
 
 function Game:next_level()
-    SM:set_fade(function ()
-        self.level_index = self.level_index+1
-        if not Level:load_level(tostring(self.level_index)) then
-            self.level_index = self.level_index-1
-        end
-    end)
+    if self.level_index == 10 then
+        SM:set_fade(function ()
+            SM:load("end")
+        end)
+    else
+        SM:set_fade(function ()
+            self.level_index = self.level_index+1
+            if not Level:load_level(tostring(self.level_index)) then
+                self.level_index = self.level_index-1
+            end
+        end)
+    end
 end
 
 function Game:check()
