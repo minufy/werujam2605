@@ -1,6 +1,6 @@
 WINDOW_W = 128
 WINDOW_H = 128
-CONSOLE = true
+CONSOLE = false
 
 function love.conf(t)
     t.console = CONSOLE
